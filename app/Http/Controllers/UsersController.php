@@ -74,6 +74,11 @@ class UsersController extends Controller
 
          return redirect()->route('homepage');
     }
+
+    public function profile()
+    {
+        return view('profile');
+    }
     /**
      * Display the specified resource.
      *

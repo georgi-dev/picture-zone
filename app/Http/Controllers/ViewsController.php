@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
-
+use App\Movie;
 class ViewsController extends Controller
 
 {	public function toHomePage()
@@ -26,7 +26,16 @@ class ViewsController extends Controller
     public function toDashboard()
     {	
     	$user = Auth::user();
-    	//print_r($user);
-    	return view('dashboard',compact('user'));
+        $movies = new YoutubeController();
+
+    	return view('dashboard',[
+            'user' => $user,
+            'random_movie' => $movies->random_movie(),
+            'all_movies' => $movies->all_movies()
+            ]);
+           
+       // return view('movies', ['movies' => $movies]);
     }
+
+
 }
