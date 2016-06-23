@@ -20,4 +20,9 @@ class MoviesController extends Controller
     	
     	return $movies;
     }
+
+    public function show($id)
+    {
+        //
+    }
 }

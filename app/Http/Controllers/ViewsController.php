@@ -38,4 +38,16 @@ class ViewsController extends Controller
     }
 
 
+
+    public function toMoviePage()
+    {
+                $user = Auth::user();
+        $movies = new YoutubeController();
+
+        return view('title/{$name_slug}',[
+            'user' => $user,
+            'name_slug' => str_replace(' ','-',$movies->show())
+
+            ]);
+    }
 }

@@ -72,7 +72,7 @@ class UsersController extends Controller
     {
         Auth::logout();
 
-         return redirect()->route('homepage');
+         return redirect()->back();
     }
 
     public function profile()

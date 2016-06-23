@@ -12,8 +12,8 @@
 */
 
 Route::get('/', [
-	'uses' => 'ViewsController@toHomePage',
-	'as' => 'homepage'
+	'uses' => 'ViewsController@toDashboard',
+	'as' => 'dashboard'
 	]);
 Route::get('/sign-up',[
 	'uses' => 'ViewsController@toRegisterPage',
@@ -23,12 +23,12 @@ Route::get('/sign-in',[
 	'uses' => 'ViewsController@toLoginPage',
 	'as' => 'sign-in'
 	]);
-Route::get('/dashboard',[
-	'middleware' => 'auth',
-	'uses' => 'ViewsController@toDashboard',
-	'as' => 'dashboard'
+// Route::get('/dashboard',[
+// 	'middleware' => 'auth',
+// 	'uses' => 'ViewsController@toDashboard',
+// 	'as' => 'dashboard'
 
-	]);
+// 	]);
 
 
 Route::post('/register',[
@@ -62,3 +62,8 @@ Route::get('/category',function(){
 // 	]);
 
 //Route::get('/', 'YoutubeController@getMoviesFromYoutube');
+
+Route::get('/title/{name_slug}',[
+		'uses' => 'YoutubeController@show',
+		'as' => 'show.movie.page'
+	]);

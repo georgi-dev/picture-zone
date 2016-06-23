@@ -24,8 +24,8 @@
         <li>
 
           <div class="form-group navbar-form">
-            <a href="sign-in"class="btn btn-danger">Sign in</a>
-            <a href="sign-up"class="btn btn-danger">Sign up</a>
+            <a href="/sign-in"class="btn btn-danger">Sign in</a>
+            <a href="/sign-up"class="btn btn-danger">Sign up</a>
           </div>
         </li>
         @endif

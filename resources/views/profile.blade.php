@@ -2,7 +2,7 @@
 Admin
 
 @else
-
-@include('includes.restricted');
+@extends('layouts.master')
+@include('includes.restricted')
 
 @endif

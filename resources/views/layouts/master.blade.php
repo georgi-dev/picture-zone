@@ -6,6 +6,7 @@
         .navbar-default .navbar-nav>li>a{font-weight:bold;color:#fff;}
         .navbar-default .navbar-nav>li>a:hover{color:red;}
         body,a{color:#fff;}
+        li{list-style: none;}
             h3,label{color:#fff;}
              .background{background-image: url('/images/Abstract.jpg');background-size: 100% 120%;
     background-position: 50% 100%;}
