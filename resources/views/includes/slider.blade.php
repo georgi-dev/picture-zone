@@ -8,14 +8,14 @@
   </ol>
 
   <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox" style="height:350px;">
+  <div class="carousel-inner" role="listbox" style="height:600px;">
     <div class="item active">
       <img src="/images/dracula.jpg" alt="Chania" style="width:100%;height:100%">
     </div>
 
     <div class="item">
       <img src="/images/maxresdefault.jpg" alt="Chania" style="width:100%;height:100%">
-      <h2 style="position:absolute;top:20px;right:30px;">Iron man 3</h2>
+      <h2 style="position:absolute;top:20px;right:30px;">Beautiful Places Around The World</h2>
     </div>
 
     <div class="item">

@@ -13,15 +13,15 @@
 
 Route::get('/', [
 	'uses' => 'ViewsController@toDashboard',
-	'as' => 'dashboard'
+	'as'   => 'dashboard'
 	]);
 Route::get('/sign-up',[
 	'uses' => 'ViewsController@toRegisterPage',
-	'as' => 'sign-up'
+	'as'   => 'sign-up'
 	]);
 Route::get('/sign-in',[
 	'uses' => 'ViewsController@toLoginPage',
-	'as' => 'sign-in'
+	'as'   => 'sign-in'
 	]);
 // Route::get('/dashboard',[
 // 	'middleware' => 'auth',
@@ -33,23 +33,56 @@ Route::get('/sign-in',[
 
 Route::post('/register',[
 	'uses' => 'UsersController@register',
-	'as' => 'register'
+	'as'   => 'register'
 	]);
 Route::post('/login',[
 	'uses' => 'UsersController@login',
-	'as' => 'login'
+	'as'   => 'login'
 	]);
 
 Route::get('/logout',[
 	'uses' => 'UsersController@logout',
-	'as' => 'logout'
+	'as'   => 'logout'
 	]);
 
 
 Route::get('/profile',[
 	'uses' => 'UsersController@profile',
-	'as' => 'profile'
+	'as'   => 'profile'
 	]);
+
+Route::get('/edit-profile/{id}',[
+	'uses' => 'UsersController@edit_profile',
+	'as'   => 'edit-profile'
+	]);
+
+Route::post('/update-profile',[
+	'uses' => 'UsersController@update_profile',
+	'as'   => 'update-profile'
+	]);
+Route::get('/profileimage/{filename}',[
+	'uses' => 'UsersController@getProfileImage',
+	'as'   => 'avatar.image'
+	]);
+Route::get('photos',[
+	'uses' => 'UsersController@getPhotoPage',
+	'as'   => 'users.photos'
+	]);
+
+Route::post('add-image',[
+	'uses' => 'PhotosController@add_photo',
+	'as'   => 'add.image'
+	]);
+
+Route::get('/show_photo/{filename}',[
+	'uses' => 'PhotosController@showPhoto',
+	'as'   => 'show.photo'
+	]);
+Route::get('/delete-image/{name}',[
+	'uses' => 'PhotosController@delete_image',
+	'as'   => 'delete.image'
+	]);
+
 Route::get('/category',function(){
 
 	return view('category');
@@ -65,5 +98,5 @@ Route::get('/category',function(){
 
 Route::get('/title/{name_slug}',[
 		'uses' => 'YoutubeController@show',
-		'as' => 'show.movie.page'
+		'as'   => 'show.movie.page'
 	]);

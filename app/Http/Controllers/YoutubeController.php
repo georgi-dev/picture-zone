@@ -19,7 +19,7 @@ class YoutubeController extends Controller {
          foreach ($movie_obj as $movie) {
          	$movie_title[] = $movie->snippet->title;
          	$movie_cover[] = $movie->snippet->thumbnails->high->url;
-         	$movie_id[] = $movie->id->videoId;
+         	$movie_id[]    = $movie->id->videoId;
          }
          //print_r(count($movie_title));
          $now = new Carbon();

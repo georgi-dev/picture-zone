@@ -1,21 +1,4 @@
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-include_once('C:\xampp\htdocs\video-site\config\pq.php');
-use App\Http\Requests;
-
-class YoutubeScraperController extends Controller
-{
-    public function proba()
-    {	
-    	$url = 'http://www.imdb.com';
-    	$pr = select_elements('#navbar > span#home_img_holder',file_get_contents($url));
-    	print_r($pr);
-    	return $pr;	
-
-    	                    <li>
+                    <li>
                         <h5 class="col-md-3 text-danger"></h5>
                         <div style="color:red;width:200px;height:150px;margin-bottom: 20px;">
                             <a href="./title/<?=preg_replace("/\-\#{1,}/", "-",htmlspecialchars(($movie->name_slug)))?>" title="{{$movie->name}}">
@@ -23,5 +6,11 @@ class YoutubeScraperController extends Controller
                             </a>
                         </div>
                     </li>
-    }
-}
+
+                    return response()->json(array(Photo::where('id',$id_photo[0]['attributes']['id'])->first()));
+
+                    $id_photo = Photo::where('photo_path','/photo_folder'.'/'.$filename)->get();
+        //dd($id_photo[0]['attributes']['id']);
+        //return redirect()->route('users.photos');
+
+        return redirect()->response()->json((Photo::where('id',$id_photo[0]['attributes']['id'])->first()));

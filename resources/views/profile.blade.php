@@ -1,8 +1,14 @@
-@if(Auth::check())
-Admin
+@if(!Auth::check())
 
-@else
 @extends('layouts.master')
 @include('includes.restricted')
 
+@else
+@section('content')
+<div style="min-height:600px;">
+
+
+
+</div>
+@stop
 @endif

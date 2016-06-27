@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" style="background-color:#000;">
+<nav class="navbar navbar-default" style="background-color:#43a7d6;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="col-md-3">

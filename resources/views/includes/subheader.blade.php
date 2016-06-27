@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" style=" color:#fff;background:url('/images/subheader.jpg')">
+<nav class="navbar navbar-default" style=" color:#fff;background:#43a7d6">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     
@@ -33,8 +33,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Профил <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
+            @include('includes.dropdown')
+            <li><a href="/edit-profile/{{Auth::user()->id}}">Edit profile</a></li>
+            <li><a href="/photos">Photos</a></li>
             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="{{route('logout')}}">Logout</a></li>

@@ -5,7 +5,9 @@ use Auth;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\ViewsController as ViewC;
 
 class UsersController extends Controller
@@ -40,7 +42,7 @@ class UsersController extends Controller
     public function register(Request $request)
     {
       	$this->validate($request,[
-      		'email' => 'required|unique:users',
+      		'email'    => 'required|unique:users',
       		'username' => 'required|min:4',
       		'password' => 'required|min:6'
       		]);
@@ -50,7 +52,7 @@ class UsersController extends Controller
 
       	 $user = new User();
 
-      	 $user->email = $email;
+      	 $user->email    = $email;
       	 $user->username = $username;
       	 $user->password = $password;
 
@@ -72,33 +74,17 @@ class UsersController extends Controller
     {
         Auth::logout();
 
-         return redirect()->back();
+         return view('welcome');
     }
 
     public function profile()
     {
         return view('profile');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit_profile()
     {
-        //
+        return view('edit-profile');
     }
 
     /**
@@ -108,11 +94,48 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update_profile(Request $request)
+    {   
+        $this->validate($request,[
+            'username'   => 'required',
+            'first_name' => 'required|min:3',
+            'last_name'  => 'required|min:3'
+            ]);
+
+        $data = array(
+                        'username'   => $request['username'],
+                        'first_name' => $request['first_name'],
+                        'last_name'  => $request['last_name']
+
+                     );
+        \DB::table('users')->where('id',$request->id)->update($data);        
+
+        $file     = $request->file('image');
+        $filename = $request['first_name'] . '-' .$request->id . '.jpg';
+        if ($file) {
+            Storage::disk('local')->put($filename, File::get($file));
+        }
+       
+
+        
+
+        return redirect()->route('dashboard');
     }
 
+    public function getProfileImage($filename)
+    {   
+        $file = Storage::disk('local')->get($filename);
+
+        return response($file, 200);
+    }
+
+    public function getPhotoPage()
+    {   
+        $photos = new PhotosController();
+
+        return view('photos',['photos' => $photos->all_photos_by_userID()]);
+
+    }
     /**
      * Remove the specified resource from storage.
      *

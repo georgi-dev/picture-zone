@@ -29,9 +29,9 @@ class ViewsController extends Controller
         $movies = new YoutubeController();
 
     	return view('dashboard',[
-            'user' => $user,
+            'user'         => $user,
             'random_movie' => $movies->random_movie(),
-            'all_movies' => $movies->all_movies()
+            'all_movies'   => $movies->all_movies()
             ]);
            
        // return view('movies', ['movies' => $movies]);
@@ -45,7 +45,7 @@ class ViewsController extends Controller
         $movies = new YoutubeController();
 
         return view('title/{$name_slug}',[
-            'user' => $user,
+            'user'      => $user,
             'name_slug' => str_replace(' ','-',$movies->show())
 
             ]);
