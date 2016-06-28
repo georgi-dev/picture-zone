@@ -82,6 +82,10 @@ Route::get('/delete-image/{name}',[
 	'uses' => 'PhotosController@delete_image',
 	'as'   => 'delete.image'
 	]);
+Route::post('edit-image/{name}',[
+	'uses' => 'PhotosController@edit_image',
+	'as'   => 'edit.image'
+	]);
 
 Route::get('/category',function(){
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\ViewsController as ViewC;
 use App\Photo;
+use Input;
 class PhotosController extends Controller
 {   
 
@@ -25,11 +26,18 @@ class PhotosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function all_photos()
     {
-        //
+        $photo = new Photo();
+        return $photo->get();
     }
 
+        public function random_photo()
+    {   
+
+        $photos = Photo::all()->random(1);
+        return $photos;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -47,31 +55,40 @@ class PhotosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function add_photo(Request $request)
-    {   
+    {       
+        //print_r($request->all());
         //return "bravo";
         $now = new Carbon();
+      
+        // $this->validate($request,[
+                                    
+        //                             $request['body']     => 'required',
+        //                             $request['category'] => 'required'
+        //                             ]);
+
 
         $file     = $request->file('image');
-        $name = Auth::user()->last_name . '-' . Auth::user()->id . $now->toDateTimeString();
+        $name =  Input::file('image')->getClientOriginalName();
         $filename = Auth::user()->last_name . '-' . Auth::user()->id . str_random(5) . '.jpg';
-        $desc = 'Lorem ipsum sit dolor amet';
+        $desc = $request['body'];
         
         if ($file) {
             $data = array(
                             'user_id'    => Auth::user()->id,
-                           'photo_path'  => '/photo_folder'.'/'.$filename,
-                           'name'        => $filename,
+                           'photo_path'  => '/photo_folder'.'/'.$name,
+                           'name'        => $name,
                            'description' => $desc,
+                           'category'    => $request['category'],
                            'updated_at'   => $now->toDateTimeString(),
                            'created_at'  => $now->toDateTimeString()
 
                          );
             Photo::insert($data);
            $pr = count(Photo::all());
-          print_r($pr);
-            Storage::disk('uploads')->put($filename, File::get($file));
+          //print_r($pr);
+            Storage::disk('uploads')->put($name, File::get($file));
         }
-        $id_photo = Photo::where('photo_path','/photo_folder'.'/'.$filename)->get();
+        $id_photo = Photo::where('photo_path','/photo_folder'.'/'.$name)->get();
         return redirect()->route('users.photos');
 
         // return response()->json(array(  
@@ -104,9 +121,17 @@ class PhotosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit_image(Request $request,$name)
     {
-        //
+        // dd($request->all());
+        $data=[
+                'description' => $request['edit-image-description'],
+                'category'    => $request['edit-image-category']
+                ];
+
+        Photo::where('name',$name)->update($data);
+
+        return redirect()->route('users.photos');
     }
 
     /**
@@ -131,7 +156,7 @@ class PhotosController extends Controller
     {
         Photo::where('name',$name)->delete();
         Storage::disk('uploads')->delete($name);
-
-        return redirect()->route('users.photos')->with('bravo');
+        $message = "Crap";
+        return redirect()->route('users.photos')->with(['message'=> $message]);
     }
 }

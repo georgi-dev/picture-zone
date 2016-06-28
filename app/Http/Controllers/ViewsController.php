@@ -26,12 +26,12 @@ class ViewsController extends Controller
     public function toDashboard()
     {	
     	$user = Auth::user();
-        $movies = new YoutubeController();
+        $photos = new PhotosController();
 
     	return view('dashboard',[
             'user'         => $user,
-            'random_movie' => $movies->random_movie(),
-            'all_movies'   => $movies->all_movies()
+            'random_photo' => $photos->random_photo(),
+            'all_photos'   => $photos->all_photos()
             ]);
            
        // return view('movies', ['movies' => $movies]);

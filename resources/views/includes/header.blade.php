@@ -2,8 +2,8 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="col-md-3">
-      <a class="navbar-brand" href="#">
-        <img alt="logo" src="/images/movies_logo.jpg" style="width:100%;height:100%;">
+      <a class="navbar-brand" style="padding:0;"href="#">
+        <img alt="logo" src="/images/pictures-zone-2.png" style="width:100%;height:100%;">
       </a>
     </div>
 

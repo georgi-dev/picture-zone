@@ -1,6 +1,9 @@
 .navbar-default .navbar-nav>li>a{font-weight:bold;color:#fff;}
-        .navbar-default .navbar-nav>li>a:hover{color:#fff;text-decoration: underline;}
-        body,a{color:#fff;}
+        .navbar-default .navbar-nav>li>a:hover{color:#f4eb70;text-decoration: underline;}
+           .navbar li:hover {border: 1px solid brown; background: url('/images/pictures-zone-2-part.png');}
+        /*body,a{color:#fff;}*/
+        a:hover{color:#fff;}
+        a:focus{color:#fff;}
         li{list-style: none;}
             h3,label{color:#fff;}
              .background{background-image: url('/images/Abstract.jpg');background-size: 100% 120%;
