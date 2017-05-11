@@ -13,7 +13,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/">Home</a></li>
-        <li><a href="/category">Category</a></li>
+        <li><a href="/gallery">Gallery</a></li>
         <li><a href="/profile">Profile</a></li>
         <li><a href="#">About</a></li>
         

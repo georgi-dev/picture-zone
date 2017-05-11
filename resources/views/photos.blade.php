@@ -7,13 +7,18 @@
 @section('content')
 <div style="min-height:600px;background:url('/images/backgrounder.png');">
 <link rel="stylesheet" href="{{ URL::asset('css/photo.css') }}">
-<div style="text-align:center"><h2 class="border-image"><em>PORTFOLIO</em></h2></div>
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div style="text-align:center;color:#fff;"><h2 class="border-image"><em>PORTFOLIO</em></h2></div>
+@if(count($errors) > 0)
+    @foreach($errors as $error)
+    <li>{{$error}}</li>
+    @endforeach
+@endif
 <div class="col-md-3" style="margin-left: 4%;    float: right;">
     <h3 >Add image</h3>
     <form  method="post" id="upload_form"action="{{route('add.image')}}" file="true" style="line-height: 239%;" enctype="multipart/form-data">
-    
-        
+
+
 
         <div class="for-group">
             <label for="image"></label>
@@ -46,141 +51,189 @@
         <input type="hidden" name="_token" value="{{ csrf_token()}}">
     </form>
 
-</div>  
+</div>
   <script>
-  
-    
+
+
   </script>
 </head>
-<body> 
+<body>
 
     @foreach($photos as $photo)
-
+<?php /*var_dump($photo);*/?>
         <li class="parent">
             <h5 class="col-md-3 text-danger"></h5>
-            <div id="links leaf" class="links" style="color:red;width:200px;height:150px;margin-bottom: 20px;">
+            <div id="links leaf" class="links" style="position:relative;overflow:hidden;color:red;width:250px;height:170px;margin-bottom: 20px;">
                 <a title="{{$photo['attributes']['name']}}"></a>
                     <img id="photo" class="photo img-thumbnail"src="{{$photo['attributes']['photo_path']}}" style="width:100%;height:100%;"/>
-                   
-                    <div  class="show-info container" style="display:none;">
-                        <h4 style="color:#fff;" class="text-center">{{$photo['attributes']['name']}}</h4>
-                        <hr>
-                        <div class="row">
-                            <div  class="col-md-5 col-md-offset-1">
-                                <span style="color:#fff;">Category :</span>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="" class="col-md-4">{{$photo['attributes']['category']}}</a>
-                            </div>
-                        </div>
-                        <hr>
 
-                        <div class="row">
-                            <div  class="col-md-5 col-md-offset-1">
-                                <span style="color:#fff;">Description :</span>
+                    <div class="show-info container">
+                        <div class="handler" style="position:relative;">
+                            <div class="row"><h4 style="color:#fff;border-bottom:2px solid #fff;border-width:2px;" class=" text-center">{{$photo['attributes']['name']}}</h4></div>
+
+
+                            <hr>
+
+                            <div class="row">
+                                <div  class="col-md-5 col-md-offset-1">
+                                    <span style="color:#fff;">Description :</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <a  class="see-me">See me</a>
+                                        <div id="desc" class="modal fade" style="width:500px;height:300px;display:none;">
+
+                                            <div class="modal-header text-center">
+
+                                              <h4 class="modal-title">Description</h4>
+                                            </div>
+                                            <div class="modal-body">
+
+                                              <p data-id="{{$photo['attributes']['description']}}">{{$photo['attributes']['description']}}</p>
+                                            </div>
+                                        </div>
+
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <a  href="" class="col-md-6">{{$photo['attributes']['description']}}</a>
-                            </div>
+
+                                <div class="view-edit-delete" style="position:absolute;top:-5px;right:0;">
+                                    <a href="{{$photo['attributes']['photo_path']}}" data-gallery class="text-center glyphicon glyphicon-eye-open" title="{{$photo['attributes']['name']}}"></a></br>
+                                    <a href="#" class="edit glyphicon glyphicon-wrench" title="edit"></a></br>
+                                    <a href="delete-image/{{$photo['attributes']['name']}}" class="glyphicon glyphicon-trash" title="delete"></a>
+                                     <input type="hidden" name="_token" value="{{ csrf_token()}}">
+                                </div>
                         </div>
-                        <hr>
-                       
                     </div>
 
-                                <form id="edit-image" method="post" action="edit-image/{{$photo['attributes']['name']}}" style="display:none;">
-                                    <input type="hidden" name="image-name" value="{{$photo['attributes']['name']}}">
-                                    <div class="row">
-                                        <div  class="col-md-5 col-md-offset-1">
-                                            <span >Category :</span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <select class="form-control" name="edit-image-category" id="edit-category">
 
-                                                <option>panorama</option>
-                                                <option>animals</option>
-                                                <option>whatever</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <hr>
-
-                                    <div class="row">
-                                    <div  class="col-md-5 col-md-offset-1">
-                                        <span>Description :</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                      <textarea name="edit-image-description"value="{{$photo['attributes']['description']}}"></textarea>
-                                    </div>
-                                    </div>
-
-                                        <button  type="submit" id="edit-image" name="edit-image" class="btn btn-danger">Update</button>
-                                        <input type="hidden" name="_token" value="{{ csrf_token()}}">
-
-                                </form>
 
                 </a>
-                
+
             </div>
-                        <div  style="border:1px solid red;">
+                  <!--       <div  style="border:1px solid red;">
                             <a href="{{$photo['attributes']['photo_path']}}" data-gallery class="col-md-4 btn btn-default">view</a>
                             <a href="#" class="edit col-md-4 btn btn-primary">Edit</a>
                             <a href="delete-image/{{$photo['attributes']['name']}}" class="col-md-4 btn btn-danger">delete</a>
-                            <input type="hidden" name="_token" value="{{ csrf_token()}}">
-                        </div>
+
+                        </div> -->
         </li>
 
-    @endforeach
+                                <form id="edit-image" method="post" action="edit-image/{{$photo['attributes']['name']}}" style="display:none;">
+                        <input type="hidden" name="image-name" value="{{$photo['attributes']['name']}}">
+                        <div class="row">
+                            <div  class="col-md-5 col-md-offset-1">
+                                <span >Category :</span>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control" name="edit-image-category" id="edit-category">
+
+                                    <option>panorama</option>
+                                    <option>animals</option>
+                                    <option>whatever</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                        <div  class="col-md-5 col-md-offset-1">
+                            <span>Description :</span>
+                        </div>
+                        <div class="col-md-6">
+                          <textarea class="test" name="edit-image-description"></textarea>
+                        </div>
+                        </div>
+
+                            <button  type="submit"  name="edit-image" class="btn btn-danger">Update</button>
+                            <input type="hidden" name="_token" value="{{ csrf_token()}}">
+
+                    </form>
+
+ @endforeach
+
+
         @foreach($errors as $error)
-        <li>$error->message</li>
+        <li>$error</li>
         @endforeach
         <script type="text/javascript" src="/js/jquery.js"></script>
+        <script type="text/javascript" src="/js/jquery-ui.js"></script>
 
         <script type="text/javascript">
-        $(document).ready(function() {
+
+            $(document).ready(function() {
+                var desc_body_id =  $('.modal-body').find('p').data("id");
+                var desc_body =  $('.modal-body').find('p').val();
+                //console.log(desc_body_id);
+                $( ".links" ).hover(
+                      function() {
+                            $('.show-info').show();
+                         $('.photo',this).animate({opacity:0.5},500);
+                         $('.show-info',this).animate({opacity:1,left:'0px'},500);
 
 
-            $( ".links" ).hover(
-                  function() {
-                    
-                    $('.show-info',this).show();
-                  
-          
-                  }, function() {
-                    $('.show-info',this).hide();
-                  }
-                );
+                      }, function() {
 
-           $('.edit').click(function() {
 
-                    $('.edit-image',this).modal('.edit');
+                            $('.photo',this).css({opacity:1},500);
+                            $('.show-info',this).animate({opacity:0,left:'260px'},500);
+                      }
+                    );
 
-           });
+               $(".edit").on('click',function() {
 
-            
-                // $("#addbtn").click(function(){
-            
-            //          console.log('Ready!!!');
+                            $('.photo').css({opacity:1},500);
+                            $('.show-info').animate({opacity:0,left:'260px'},1000);
 
-            //         $.ajax({
-            //               url:'add-image',
-            //               data:new FormData($("#upload_form")[0]),
-            //               dataType:'json',
-            //               async:false,
-            //               type:'post',
-            //               processData: false,
-            //               contentType: false,
-            //               success:function(response){
-            //                 console.log(response);
-            //                 $('#photo').attr('src',response.file_path);
-            //               },
-            //         });
-                      
-            // });
+                            var categ = $(this).find(".show-info").find("a").data("categ");
+                            //console.log(desc_body_id);
+                            $("#edit-category option:contains("+ categ +")").attr("selected","selected");
+                            $('.test').text(desc_body);
+                            $('#edit-image').modal();
+                   });
 
-        });
 
-            
+
+
+                $('.see-me').on('click',function(e) {
+                    e.preventDefault();
+                    // var categ = $()
+
+                    $(this).parent().find("#desc").find('.modal-body').find('p').dialog({modal:true});
+                     var text =  $(this).parent().find('p').text();
+                       console.log(text);
+
+                         $("#desc").animate({opacity:1},1000);
+                         var pr = $(this).parent().find("#desc").find('.modal-body p').text();
+                         console.log(pr);
+                       $(this).parent().find("#desc").find('.modal-body').find('p').modal(text);
+
+
+
+               });
+
+                                // $("#addbtn").click(function(){
+
+                            //          console.log('Ready!!!');
+
+                            //         $.ajax({
+                            //               url:'add-image',
+                            //               data:new FormData($("#upload_form")[0]),
+                            //               dataType:'json',
+                            //               async:false,
+                            //               type:'post',
+                            //               processData: false,
+                            //               contentType: false,
+                            //               success:function(response){
+                            //                 console.log(response);
+                            //                 $('#photo').attr('src',response.file_path);
+                            //               },
+                            //         });
+
+                            // });
+
+            });
+
+
         </script>
 </div>
 @stop

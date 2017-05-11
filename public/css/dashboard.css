@@ -1,5 +1,4 @@
 li{display: inline-block;}
-
 .show-info{z-index:200;width:250px;height:170px;border:4px solid red;padding: 5px;color:#fff;
 	background: rgba(0, 0, 0, 0.48);position: absolute;top:0; left:260px;}
 .show-info a,h4,span {color:#fff;}
@@ -7,4 +6,6 @@ li{display: inline-block;}
  #edit-image a,span,h4 {color:#000;}
 .parent{position: relative;}
 .modal a.close-modal{top: -2.5px; right: -4.5px;}
-.view-edit-delete a {float:left;padding:5px;}
+.view-edit-delete a {float:left;padding:5px;text-decoration: none;}
+.view-edit-delete a:hover{transform:scale(1.1);}
+.br-bm{border-bottom:1px solid #fff;}

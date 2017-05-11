@@ -31,23 +31,22 @@ class ViewsController extends Controller
     	return view('dashboard',[
             'user'         => $user,
             'random_photo' => $photos->random_photo(),
-            'all_photos'   => $photos->all_photos()
+            'all_photos'   => $photos->all_photos(),
+            'author'       => $photos->getAuthorPhoto()
             ]);
-           
-       // return view('movies', ['movies' => $movies]);
     }
 
 
 
-    public function toMoviePage()
+    public function toGalleryPage()
     {
-                $user = Auth::user();
-        $movies = new YoutubeController();
+               $user = Auth::user();
+        $photos = new PhotosController();
 
-        return view('title/{$name_slug}',[
-            'user'      => $user,
-            'name_slug' => str_replace(' ','-',$movies->show())
-
+        return view('gallery',[
+            'user'         => $user,
+            'all_photos'   => $photos->all_photos(),
+            'author'       => $photos->getAuthorPhoto()
             ]);
     }
 }

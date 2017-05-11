@@ -87,11 +87,12 @@ Route::post('edit-image/{name}',[
 	'as'   => 'edit.image'
 	]);
 
-Route::get('/category',function(){
+Route::get('/gallery',[
+	'uses' => 'ViewsController@toGalleryPage',
+	'as'   => 'gallery.page'
+	]);
 
-	return view('category');
-});
-	
+
 //////////////////////////////////////
 // Route::get('/',[
 // 	'uses' => 'MoviesController@random_movie',
@@ -100,7 +101,7 @@ Route::get('/category',function(){
 
 //Route::get('/', 'YoutubeController@getMoviesFromYoutube');
 
-Route::get('/title/{name_slug}',[
-		'uses' => 'YoutubeController@show',
-		'as'   => 'show.movie.page'
-	]);
+// Route::get('/title/{name_slug}',[
+// 		'uses' => 'YoutubeController@show',
+// 		'as'   => 'show.movie.page'
+// 	]);

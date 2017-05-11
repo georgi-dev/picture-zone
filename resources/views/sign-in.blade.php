@@ -30,4 +30,17 @@
     	</div>
     </div>
 </div>	
+<script src="/js/jquery.js"></script>
+<script>
+    
+    $(function(){
+        // console.log("sign in");
+        // $('button').click(function(event){
+        //     event.preventDefault();
+        //     $('input#password').attr('type','text');
+        //     console.log($('#id').val());
+        // });
+    });
+
+</script>
 @stop

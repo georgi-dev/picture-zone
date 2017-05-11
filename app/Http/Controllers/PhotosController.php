@@ -13,10 +13,10 @@ use App\Http\Controllers\ViewsController as ViewC;
 use App\Photo;
 use Input;
 class PhotosController extends Controller
-{   
+{
 
         public function all_photos_by_userID()
-    {   
+    {
 
         $photo = new Photo();
         return $photo->where('user_id',Auth::user()->id)->get();
@@ -28,15 +28,28 @@ class PhotosController extends Controller
      */
     public function all_photos()
     {
-        $photo = new Photo();
-        return $photo->get();
+         $all_photos = \DB::table('photos')
+            ->join('users', 'users.id', '=', 'photos.user_id')
+            ->select('users.username','photos.name','photos.description','photos.photo_path')
+
+            ->get();
+
+        return $all_photos;
     }
 
         public function random_photo()
-    {   
+    {
 
         $photos = Photo::all()->random(1);
-        return $photos;
+
+        $author_photo = \DB::table('photos')
+            ->where('photos.name','=', $photos->name)
+            ->join('users', 'users.id', '=', 'photos.user_id')
+            ->select('users.username','photos.name','photos.photo_path')
+            ->get();
+            //print_r($author_photo[0]);
+            return $author_photo[0];
+
     }
     /**
      * Show the form for creating a new resource.
@@ -55,30 +68,29 @@ class PhotosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function add_photo(Request $request)
-    {       
+    {
         //print_r($request->all());
         //return "bravo";
         $now = new Carbon();
-      
-        // $this->validate($request,[
-                                    
-        //                             $request['body']     => 'required',
-        //                             $request['category'] => 'required'
-        //                             ]);
+
+        $this->validate($request,[
+                                   'image' => 'required|image'
+
+                                    ]);
 
 
         $file     = $request->file('image');
         $name =  Input::file('image')->getClientOriginalName();
         $filename = Auth::user()->last_name . '-' . Auth::user()->id . str_random(5) . '.jpg';
         $desc = $request['body'];
-        
+
         if ($file) {
             $data = array(
                             'user_id'    => Auth::user()->id,
                            'photo_path'  => '/photo_folder'.'/'.$name,
                            'name'        => $name,
                            'description' => $desc,
-                           'category'    => $request['category'],
+                           
                            'updated_at'   => $now->toDateTimeString(),
                            'created_at'  => $now->toDateTimeString()
 
@@ -91,7 +103,7 @@ class PhotosController extends Controller
         $id_photo = Photo::where('photo_path','/photo_folder'.'/'.$name)->get();
         return redirect()->route('users.photos');
 
-        // return response()->json(array(  
+        // return response()->json(array(
         //                                 'all_info' => Photo::where('id',$id_photo[0]['attributes']['id'])->first(),
         //                                 'file_path'=> '/photo_folder'.'/'.$filename,
         //                                 'count' => $pr
@@ -99,7 +111,7 @@ class PhotosController extends Controller
     }
 
         public function showPhoto($filename)
-    {   
+    {
         $file = Storage::disk('public')->get($filename);
 
         return response($file, 200);
@@ -110,9 +122,15 @@ class PhotosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getAuthorPhoto()
     {
-        //
+        $author_photo = \DB::table('photos')
+            ->join('users', 'users.id', '=', 'photos.user_id')
+            ->select('users.username')
+
+            ->get();
+
+            return $author_photo;
     }
 
     /**

@@ -13,15 +13,6 @@ use App\Http\Controllers\ViewsController as ViewC;
 class UsersController extends Controller
 {   
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -74,7 +65,7 @@ class UsersController extends Controller
     {
         Auth::logout();
 
-         return view('welcome');
+         return  redirect()->route('dashboard');
     }
 
     public function profile()
